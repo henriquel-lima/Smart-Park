@@ -6,7 +6,7 @@ void aoEnviar(const wifi_tx_info_t* info, esp_now_send_status_t status){
 }
 
 void setupEspNow(){
-  const uint8_t canal = 3
+  const uint8_t canal = 3;
   WiFi.mode(WIFI_STA);
   esp_wifi_set_channel(canal, WIFI_SECOND_CHAN_NONE); // precisa coincidir com o canal do roteador
 
