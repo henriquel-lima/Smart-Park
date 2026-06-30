@@ -1,0 +1,32 @@
+#include <WiFi.h>
+#include <esp_now.h>
+#include <HTTPClient.h>
+#include "secrets.h"
+
+const char* ssid = WIFI_SSID;
+const char* password = WIFI_PASSWORD;
+const char* serverURL = SERVER_URL;
+
+typedef struct{
+  bool estadoVaga1;
+} DadosVagas;
+
+DadosVagas dadosRecebidos;
+
+volatile bool novosDadosRecebidos = false;
+
+void setup() {
+  Serial.begin(115200);
+  setupWiFi();
+  setupEspNow();
+  Serial.print("Canal do receptor: ");
+  Serial.println(WiFi.channel());
+}
+
+void loop() {
+  reconectarWiFi();
+  if(novosDadosRecebidos){
+    novosDadosRecebidos = false;
+    enviarDados(dadosRecebidos.estadoVaga1);
+  }
+}
